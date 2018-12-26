@@ -1,0 +1,15 @@
+{
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx4511f4c547884c62",
+	"projectname": "voice-live",
+	"miniprogramRoot": "./dist",
+	"condition": {}
+}

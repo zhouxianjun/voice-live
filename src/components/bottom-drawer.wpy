@@ -1,0 +1,126 @@
+<template>
+    <view class="i-as-mask {{ visible ? 'i-as-mask-show' : '' }}" bindtap="handleClickMask"></view>
+    <view class="i-as {{ visible ? 'i-as-show' : '' }}">
+        <view class="i-as-header">
+            <slot name="header"></slot>
+        </view>
+        <view class="i-as-content">
+            <slot name="content"></slot>
+        </view>
+        <view class="i-as-cancel" wx:if="{{ showCancel }}">
+            <i-button i-class="i-as-cancel-btn" type="ghost" size="large" long="true" bind:click="handleClickCancel">{{ cancelText }}</i-button>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class BottomDrawer extends wepy.component {
+    props = {
+        visible: {
+            type: Boolean,
+            default: false,
+            twoWay: true
+        },
+        maskClosable: {
+            type: Boolean,
+            default: true
+        },
+        showCancel: {
+            type: Boolean,
+            default: false
+        },
+        cancelText: {
+            type: String,
+            default: '取消'
+        }
+    };
+
+    methods = {
+        handleClickMask () {
+            if (!this.data.maskClosable) return;
+            this.$emit('cancel');
+        }
+    };
+}
+</script>
+<style lang="less" scoped>
+.i-as {
+    position: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f7f7f7;
+    transform: translate3d(0, 100%, 0);
+    transform-origin: center;
+    transition: all 0.2s ease-in-out;
+    z-index: 900;
+    visibility: hidden;
+}
+.i-as-show {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+}
+.i-as-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 900;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+.i-as-mask-show {
+    opacity: 1;
+    visibility: visible;
+}
+.i-as-action-item {
+    position: relative;
+}
+.i-as-action-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 0 solid #e9eaec;
+    border-bottom-width: 1px;
+}
+.i-as-header {
+    background: #fff;
+    text-align: center;
+    position: relative;
+    font-size: 12px;
+    color: #80848f;
+}
+.i-as-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 0 solid #e9eaec;
+    border-bottom-width: 1px;
+}
+.i-as-cancel {
+    margin-top: 6px;
+}
+.i-as-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+</style>

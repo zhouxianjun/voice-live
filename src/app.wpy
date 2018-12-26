@@ -1,0 +1,64 @@
+<style lang="less">
+@import './iconfont/iconfont.wxss';
+@import './common.wxss';
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+</style>
+
+<script>
+import wepy from 'wepy';
+import 'wepy-async-function';
+
+export default class extends wepy.app {
+    config = {
+        pages: ['pages/index'],
+        window: {
+            backgroundTextStyle: 'light',
+            navigationBarBackgroundColor: '#fff',
+            navigationBarTitleText: 'WeChat',
+            navigationBarTextStyle: 'black'
+        }
+    };
+
+    globalData = {
+        userInfo: null
+    };
+
+    constructor () {
+        super();
+        this.use('promisify'); // 解决promise
+        this.use('requestfix'); // 避免同时多请求
+    }
+
+    async getUserInfo () {
+        if (!this.globalData.userInfo) {
+            let res = await wepy.getUserInfo();
+            this.globalData.userInfo = res.userInfo;
+        }
+        return this.globalData.userInfo;
+    }
+
+    async onLaunch () {
+        await wepy.login();
+        /**
+         * 初始化检查scope.userInfo值，如果没有则跳过，有则代表已经授权可以直接获取用户信息
+         * 然后把信息通过userInfoReadyCallback回调函数传输
+         */
+        let res = await wepy.getSetting();
+        if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            let userInfo = await this.getUserInfo();
+
+            if (this.userInfoReadyCallback) {
+                this.userInfoReadyCallback(userInfo);
+            }
+        }
+    }
+}
+</script>

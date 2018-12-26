@@ -1,0 +1,30 @@
+.i-card {
+    margin:0 16px;
+    font-size: 14px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    border: 1rpx solid #dddee1;
+    border-radius: 5px;
+}
+.i-card-full {
+    margin:0;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+.i-card-body {
+    position:relative;
+    padding: 6px 16px;
+    color: #495060;
+    font-size: 14px;
+}
+.i-card-footer {
+    position: relative;
+    padding: 6px 16px;
+    color: #80848f;
+    font-size: 12px;
+}
+.clearfix {
+    clear: both;
+}

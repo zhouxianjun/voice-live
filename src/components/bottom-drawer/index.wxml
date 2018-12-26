@@ -1,0 +1,6 @@
+<view>
+    <view wx:if="{{ visible }}" class="mask" bindtap="handleMaskClick"></view>
+    <view wx:if="{{ visible }}" animation="{{ animationData }}">
+        <slot></slot>
+    </view>
+</view>
